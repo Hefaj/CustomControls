@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="CustomControls.custom.MagicBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CustomControls.custom"
+             DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="{Binding Title}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Title}" Value="">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <ToggleButton
+                
+                Height="20"
+                Name="_toggleButton" />
+            <Popup
+                Width="{Binding ActualWidth, ElementName=_toggleButton}"
+                StaysOpen="False"
+                MinWidth="{Binding Width, ElementName=_toggleButton}"
+                IsOpen="{Binding IsChecked, ElementName=_toggleButton}">
+                <StackPanel>
+                    <ToggleButton 
+                        Unchecked="ToggleButton_OnUnchecked"
+                        Checked="ToggleButton_OnChecked"
+                        Content="ALL">
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ButtonAll}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+                    <ListBox
+                        Name="_listBox"
+                        SelectionMode="Multiple"
+                        SelectedValuePath="{Binding SelectedValuePath}"
+                        DisplayMemberPath="{Binding DisplayMemberPath}"
+                        ItemsSource="{Binding ItemSoruce}"/>
+                </StackPanel>
+            </Popup>
+        </StackPanel>
+    </Grid>
+</UserControl>
