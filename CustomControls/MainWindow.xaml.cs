@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using CustomControls.Annotations;
 
 namespace CustomControls
@@ -21,6 +22,18 @@ namespace CustomControls
                 OnPropertyChanged();
             }
         }
+        
+        private List<Person> _selected;
+
+        public List<Person> Selected
+        {
+            get => _selected;
+            set
+            {
+                _selected = value;
+                OnPropertyChanged();
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -30,6 +43,11 @@ namespace CustomControls
                 new Person{ID = 2, Name = "Aleksandra", Kod = "B1"},
                 new Person{ID = 3, Name = "Kacper", Kod = "D1"}
             };
+            
+            Selected = new List<Person>
+            {
+                new Person{ID = 5, Name = "Artur", Kod = "Ar5"},
+            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,6 +56,11 @@ namespace CustomControls
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var a = Selected;
         }
     }
 }

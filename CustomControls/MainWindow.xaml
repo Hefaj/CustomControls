@@ -11,7 +11,11 @@
     <Grid>
         <StackPanel>
             <custom:MagicBox
+                SelectedItemsList="{Binding Selected, ElementName=mainWiondow}"
+                ItemSoruce2="{Binding Selected, ElementName=mainWiondow, Mode=TwoWay}"
                 ItemSoruce="{Binding Persons, ElementName=mainWiondow}"/>
+          <Button Content="Sprawdz" Click="ButtonBase_OnClick"/>  
+            
         </StackPanel>
     </Grid>
 </Window>

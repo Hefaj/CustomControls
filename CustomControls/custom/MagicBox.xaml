@@ -32,7 +32,7 @@
                     <ToggleButton 
                         Unchecked="ToggleButton_OnUnchecked"
                         Checked="ToggleButton_OnChecked"
-                        Content="ALL">
+                        Content="Wszystko">
                         <ToggleButton.Style>
                             <Style TargetType="ToggleButton">
                                 <Style.Triggers>
@@ -45,6 +45,8 @@
                     </ToggleButton>
                     <ListBox
                         Name="_listBox"
+                        IsSynchronizedWithCurrentItem="True"
+                        SelectionChanged="_listBox_OnSelectionChanged"
                         SelectionMode="Multiple"
                         SelectedValuePath="{Binding SelectedValuePath}"
                         DisplayMemberPath="{Binding DisplayMemberPath}"
