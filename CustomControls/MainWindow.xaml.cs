@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using CustomControls.Annotations;
 
 namespace CustomControls
@@ -21,6 +23,18 @@ namespace CustomControls
                 OnPropertyChanged();
             }
         }
+        
+        private List<int> _selected;
+
+        public List<int> Selected
+        {
+            get => _selected;
+            set
+            {
+                _selected = value;
+                OnPropertyChanged();
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +52,13 @@ namespace CustomControls
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var a = magicBox.SelectedValues.Cast<Person>().ToList();
+
+            var banan = "UU lubie!";
         }
     }
 }

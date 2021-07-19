@@ -20,15 +20,30 @@
                 </TextBlock.Style>
             </TextBlock>
             <ToggleButton
-                
                 Height="20"
                 Name="_toggleButton" />
             <Popup
+                FocusableChanged="UIElement_OnFocusableChanged"
                 Width="{Binding ActualWidth, ElementName=_toggleButton}"
                 StaysOpen="False"
                 MinWidth="{Binding Width, ElementName=_toggleButton}"
                 IsOpen="{Binding IsChecked, ElementName=_toggleButton}">
                 <StackPanel>
+                    
+                    <TextBox
+                        Name="_searchBox"
+                        TextChanged="TextBoxBase_OnTextChanged">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Fillter}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    
                     <ToggleButton 
                         Unchecked="ToggleButton_OnUnchecked"
                         Checked="ToggleButton_OnChecked"
@@ -43,7 +58,9 @@
                             </Style>
                         </ToggleButton.Style>
                     </ToggleButton>
+                    
                     <ListBox
+                        SelectionChanged="_listBox_OnSelectionChanged"
                         Name="_listBox"
                         SelectionMode="Multiple"
                         SelectedValuePath="{Binding SelectedValuePath}"

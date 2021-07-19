@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace CustomControls.custom
 {
@@ -25,16 +28,6 @@ namespace CustomControls.custom
             set => SetValue(DisplayMemberPathProperty, value);
         }
         
-        public static readonly DependencyProperty SelectedValuePathProperty =
-            DependencyProperty.Register(nameof(SelectedValuePath), typeof(string),
-                typeof(MagicBox), new UIPropertyMetadata("ID"));
-        
-        public string SelectedValuePath
-        {
-            get => (string)GetValue(SelectedValuePathProperty);
-            set => SetValue(SelectedValuePathProperty, value);
-        }
-        
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register(nameof(Title), typeof(string), 
                 typeof(MagicBox), new UIPropertyMetadata(string.Empty));
@@ -55,11 +48,30 @@ namespace CustomControls.custom
             set => SetValue(ButtonAllProperty, value);
         }
         
+        public static readonly DependencyProperty FillterProperty =
+            DependencyProperty.Register(nameof(Fillter), typeof(bool), 
+                typeof(MagicBox), new UIPropertyMetadata(false));
+        
+        public bool Fillter
+        {
+            get => (bool)GetValue(FillterProperty);
+            set => SetValue(FillterProperty, value);
+        }
+
+        public IList SelectedValues { get; } = new List<object>();
+        private CollectionView Widok { get; set; }
         public MagicBox()
         {
             InitializeComponent();
         }
-        
+
+        private bool UserFillter(object obj)
+        {
+            if (string.IsNullOrEmpty(_searchBox.Text)) return true;
+            var a = ((Person)obj).Name.IndexOf(_searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0; // trzeba kastowac na Person, tego nie chcemy
+            return a;
+        }
+
         private void ToggleButton_OnUnchecked(object sender, RoutedEventArgs e)
         {
             _listBox.UnselectAll();
@@ -68,6 +80,31 @@ namespace CustomControls.custom
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         {
             _listBox.SelectAll();
+        }
+
+        private void _listBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                SelectedValues.Add(item);
+            }
+            
+            foreach (var item in e.RemovedItems)
+            {
+                SelectedValues.Remove(item);
+            }
+        }
+
+        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Widok = (CollectionView) CollectionViewSource.GetDefaultView(_listBox.ItemsSource);
+            Widok.Filter = UserFillter;
+            CollectionViewSource.GetDefaultView(_listBox.ItemsSource).Refresh();
+        }
+
+        private void UIElement_OnFocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            _searchBox.Text = string.Empty;
         }
     }
 }

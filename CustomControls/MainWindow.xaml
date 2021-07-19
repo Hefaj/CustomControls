@@ -10,8 +10,11 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <StackPanel>
-            <custom:MagicBox
+            <custom:MagicBox x:Name="magicBox"
+                ButtonAll="True"
+                Fillter="True"
                 ItemSoruce="{Binding Persons, ElementName=mainWiondow}"/>
+            <Button Content="EAEA!" Click="ButtonBase_OnClick"></Button>
         </StackPanel>
     </Grid>
 </Window>
