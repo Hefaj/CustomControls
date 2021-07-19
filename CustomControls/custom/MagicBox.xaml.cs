@@ -68,8 +68,7 @@ namespace CustomControls.custom
         private bool UserFillter(object obj)
         {
             if (string.IsNullOrEmpty(_searchBox.Text)) return true;
-            var a = ((Person)obj).Name.IndexOf(_searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0;
-            return a;
+            return ((Person)obj).Name.IndexOf(_searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private void ToggleButton_OnUnchecked(object sender, RoutedEventArgs e)
