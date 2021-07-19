@@ -23,7 +23,6 @@
                 Height="20"
                 Name="_toggleButton" />
             <Popup
-                FocusableChanged="UIElement_OnFocusableChanged"
                 Width="{Binding ActualWidth, ElementName=_toggleButton}"
                 StaysOpen="False"
                 MinWidth="{Binding Width, ElementName=_toggleButton}"
@@ -47,7 +46,7 @@
                     <ToggleButton 
                         Unchecked="ToggleButton_OnUnchecked"
                         Checked="ToggleButton_OnChecked"
-                        Content="Wszystko">
+                        Content="ALL">
                         <ToggleButton.Style>
                             <Style TargetType="ToggleButton">
                                 <Style.Triggers>
@@ -62,8 +61,6 @@
                     <ListBox
                         SelectionChanged="_listBox_OnSelectionChanged"
                         Name="_listBox"
-                        IsSynchronizedWithCurrentItem="True"
-                        SelectionChanged="_listBox_OnSelectionChanged"
                         SelectionMode="Multiple"
                         SelectedValuePath="{Binding SelectedValuePath}"
                         DisplayMemberPath="{Binding DisplayMemberPath}"
